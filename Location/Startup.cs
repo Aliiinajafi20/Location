@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Location.Service;
 using Location.Repository;
+using AutoMapper;
+using Location.Mapping;
 
 namespace Location
 {
@@ -36,6 +38,7 @@ namespace Location
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddAutoMapper(typeof(Maps));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

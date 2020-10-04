@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Location.Service
 {
-    interface IAreaRepository:IRepository_Base<Area>
+   public interface IAreaRepository:IRepository_Base<Area>
     {
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Location.Service
 {
-    interface IRepository_Base<T> where T:class
+   public interface IRepository_Base<T> where T:class
     {
         ICollection<T> FindAll();
         T FindById(int id);

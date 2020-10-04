@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Location.Service
 {
-    interface ICountryRepository:IRepository_Base<Country>
+   public interface ICountryRepository:IRepository_Base<Country>
     {
     }
 }

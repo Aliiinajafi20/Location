@@ -24,7 +24,7 @@ namespace Location.Repository
 
         public bool Delete(Country entity)
         {
-            _db.Countries.Add(entity);
+            _db.Countries.Remove(entity);
             return Save();
         }
 
@@ -36,7 +36,7 @@ namespace Location.Repository
 
         public Country FindById(int id)
         {
-            var Countries = _db.Countries.Find();
+            var Countries = _db.Countries.Find(id);
             return Countries;
         }
 
