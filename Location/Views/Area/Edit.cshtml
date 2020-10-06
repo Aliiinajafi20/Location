@@ -1,0 +1,48 @@
+﻿@model Location.Models.DetailsAreaViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>DetailsAreaViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="AriaId" class="control-label"></label>
+                <input asp-for="AriaId" class="form-control" readonly="readonly"/>
+                <span asp-validation-for="AriaId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="AriaName" class="control-label"></label>
+                <input asp-for="AriaName" class="form-control" />
+                <span asp-validation-for="AriaName" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                <input asp-for="CountryId" class="form-control" />
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="country.CountryName" class="control-label"></label>
+                <input asp-for="country.CountryName" class="form-control" />
+                <span asp-validation-for="country.CountryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

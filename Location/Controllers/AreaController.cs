@@ -8,52 +8,69 @@ using Location.Models;
 using Location.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Location.Repository;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Location.Controllers
 {
-    public class CountryController : Controller
+    public class AreaController : Controller
     {
         private readonly ICountryRepository _countryRepository;
+        private readonly IAreaRepository _areaRepository;
         private readonly IMapper _mapper;
 
-        public CountryController(ICountryRepository countryRepository, IMapper mapper)
+        public AreaController(ICountryRepository countryRepository, IAreaRepository areaRepository, IMapper mapper)
         {
             _countryRepository = countryRepository;
-            _mapper = mapper;
+            _areaRepository = areaRepository;
+            _mapper = mapper;   
         }
-     
-        // GET: CountryController
+
+  
+        // GET: AreaController
         public ActionResult Index()
         {
-            var country = _countryRepository.FindAll().ToList();
-            var model = _mapper.Map<List<Country>, List<DetailsCountryViewModel>>(country);
+            var area = _areaRepository.FindAll().ToList();
+            var model1 = _mapper.Map<List<Area>, List<DetailsAreaViewModel>>(area);
+            return View(model1);
+        }
 
+        public ActionResult Details(int id)
+        {
+            if (!_areaRepository.isExists(id))
+            {
+                return NotFound();
+            }
+
+            var Country = _areaRepository.FindById(id);
+            var model = _mapper.Map<DetailsAreaViewModel>(Country);
             return View(model);
         }
 
-
-        // GET: CountryController/Create
+        // GET: AreaController/Create
         public ActionResult Create()
         {
+           ViewData["selectCountry"]= new SelectList(_countryRepository.FindAll(), "CountryId", "CountryName");
             return View();
         }
 
-        // POST: CountryController/Create
+        // POST: AreaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateCountryViewModel model)
+        public ActionResult Create(CreateAreaViewModel model)
         {
             try
             {
+
+
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
 
-                var Country = _mapper.Map<Country>(model);
-                var isSuccess = _countryRepository.Create(Country);
-                if(!isSuccess)
+                var Area = _mapper.Map<Area>(model);
+                
+                var isSuccess = _areaRepository.Create(Area);
+                if (!isSuccess)
                     return View(model);
 
 
@@ -63,76 +80,67 @@ namespace Location.Controllers
             {
                 ModelState.AddModelError("", "در ثبت اطلاعات مشکلی به وجود آمده است");
                 return View(model);
-                
+
             }
         }
-        // GET: CountryController/Details/5
-        public ActionResult Details(int id)
-        {
-            if (!_countryRepository.isExists(id))
-            {
-                return NotFound();
-            }
 
-            var Country = _countryRepository.FindById(id);
-            var model = _mapper.Map<DetailsCountryViewModel>(Country);
-            return View(model);
-        }
-
-
-        // GET: CountryController/Edit/5
+        // GET: AreaController/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            var Country = _countryRepository.FindById((int)id);
-            var model = _mapper.Map<DetailsCountryViewModel>(Country);
+            var Country = _areaRepository.FindById((int) id);
+            var model = _mapper.Map<DetailsAreaViewModel>(Country);
             return View(model);
         }
 
-        // POST: CountryController/Edit/5
+        // POST: AreaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, DetailsCountryViewModel model)
+        public ActionResult Edit(int i, DetailsAreaViewModel model)
         {
             try
             {
+
+
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
-                var Country = _mapper.Map<Country>(model);
-                var isSuccess = _countryRepository.Update(Country);
+
+                var Area = _mapper.Map<Area>(model);
+
+                var isSuccess = _areaRepository.Update(Area);
                 if (!isSuccess)
-                {
-                    ModelState.AddModelError("", "در ویرایش اطلاعات مشکلی به وجود آمده است");
                     return View(model);
-                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 ModelState.AddModelError("", "در ثبت اطلاعات مشکلی به وجود آمده است");
                 return View(model);
+
             }
+
         }
 
-        // GET: CountryController/Delete/5
+        // GET: AreaController/Delete/5
         public ActionResult Delete(int id)
         {
-            var country = _countryRepository.FindById(id);
-            var isSuccess = _countryRepository.Delete(country);
+            var country = _areaRepository.FindById(id);
+            var isSuccess = _areaRepository.Delete(country);
             if (!isSuccess)
             {
                 return BadRequest();
             }
             return RedirectToAction(nameof(Index));
-           
         }
 
-        //// POST: CountryController/Delete/5
+        // POST: AreaController/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Delete(int id, IFormCollection collection)

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Location.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201003160716_CreateDataBase_Country_Area_City")]
-    partial class CreateDataBase_Country_Area_City
+    [Migration("20201004170016_location")]
+    partial class location
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
